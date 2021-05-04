@@ -13,8 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let notice = SearchTrainRouter.createModule()
-        return false
+        
+        let homeVC = SearchTrainViewController.instantiateFromStoryboard()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = homeVC
+        window.makeKeyAndVisible()
+        self.window = window
+//        let notice = SearchTrainRouter.createModule()
+
+        return true
     }
+    
+    
+  
 }
 

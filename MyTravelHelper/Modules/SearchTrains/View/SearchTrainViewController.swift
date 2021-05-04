@@ -10,7 +10,7 @@ import UIKit
 import SwiftSpinner
 import DropDown
 
-class SearchTrainViewController: UIViewController {
+class SearchTrainViewController: UIViewController, StoryBoardAble {
     @IBOutlet weak var destinationTextField: UITextField!
     @IBOutlet weak var sourceTxtField: UITextField!
     @IBOutlet weak var trainsListTable: UITableView!
@@ -20,6 +20,8 @@ class SearchTrainViewController: UIViewController {
     var presenter:ViewToPresenterProtocol?
     var dropDown = DropDown()
     var transitPoints:(source:String,destination:String) = ("","")
+    
+    static var storyBoard: Storyboard {return .main}
 
     override func viewDidLoad() {
         super.viewDidLoad()
