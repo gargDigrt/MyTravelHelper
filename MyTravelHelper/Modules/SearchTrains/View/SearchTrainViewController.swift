@@ -17,7 +17,7 @@ class SearchTrainViewController: UIViewController, StoryBoardAble {
 
     var stationsList:[Station] = [Station]()
     var trains:[StationTrain] = [StationTrain]()
-    var presenter:ViewToPresenterProtocol?
+    var presenter: ViewToPresenterProtocol?
     var dropDown = DropDown()
     var transitPoints:(source:String,destination:String) = ("","")
     
@@ -25,7 +25,9 @@ class SearchTrainViewController: UIViewController, StoryBoardAble {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        trainsListTable.isHidden = true
+        
+        presenter?.view = self
+        switchTableViewVisibility(flag: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,17 +43,24 @@ class SearchTrainViewController: UIViewController, StoryBoardAble {
         showProgressIndicator(view: self.view)
         presenter?.searchTapped(source: transitPoints.source, destination: transitPoints.destination)
     }
+    
+    private func switchTableViewVisibility(flag: Bool) {
+        DispatchQueue.main.async {
+            self.trainsListTable.isHidden = flag
+        }
+    }
 }
 
-extension SearchTrainViewController:PresenterToViewProtocol {
+extension SearchTrainViewController: PresenterToViewProtocol {
+    
     func showNoInterNetAvailabilityMessage() {
-        trainsListTable.isHidden = true
+        switchTableViewVisibility(flag: true)
         hideProgressIndicator(view: self.view)
         showAlert(title: "No Internet", message: "Please Check you internet connection and try again", actionTitle: "Okay")
     }
 
     func showNoTrainAvailbilityFromSource() {
-        trainsListTable.isHidden = true
+        switchTableViewVisibility(flag: true)
         hideProgressIndicator(view: self.view)
         showAlert(title: "No Trains", message: "Sorry No trains arriving source station in another 90 mins", actionTitle: "Okay")
     }
@@ -59,12 +68,14 @@ extension SearchTrainViewController:PresenterToViewProtocol {
     func updateLatestTrainList(trainsList: [StationTrain]) {
         hideProgressIndicator(view: self.view)
         trains = trainsList
-        trainsListTable.isHidden = false
+        switchTableViewVisibility(flag: false)
+        if trainsList.count > 0 {
         trainsListTable.reloadData()
+        }
     }
 
     func showNoTrainsFoundAlert() {
-        trainsListTable.isHidden = true
+        switchTableViewVisibility(flag: true)
         hideProgressIndicator(view: self.view)
         trainsListTable.isHidden = true
         showAlert(title: "No Trains", message: "Sorry No trains Found from source to destination in another 90 mins", actionTitle: "Okay")
@@ -77,7 +88,7 @@ extension SearchTrainViewController:PresenterToViewProtocol {
     }
 
     func showInvalidSourceOrDestinationAlert() {
-        trainsListTable.isHidden = true
+        switchTableViewVisibility(flag: true)
         hideProgressIndicator(view: self.view)
         showAlert(title: "Invalid Source/Destination", message: "Invalid Source or Destination Station names Please Check", actionTitle: "Okay")
     }
@@ -130,22 +141,17 @@ extension SearchTrainViewController:UITextFieldDelegate {
     }
 }
 
-extension SearchTrainViewController:UITableViewDataSource,UITableViewDelegate {
+extension SearchTrainViewController: UITableViewDataSource,UITableViewDelegate {
+     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trains.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "train", for: indexPath) as! TrainInfoCell
+        let infoCell = tableView.dequeueReusableCell(withIdentifier: "train", for: indexPath) as! TrainInfoCell
         let train = trains[indexPath.row]
-        cell.trainCode.text = train.trainCode
-        cell.souceInfoLabel.text = train.stationFullName
-        cell.sourceTimeLabel.text = train.expDeparture
-        if let _destinationDetails = train.destinationDetails {
-            cell.destinationInfoLabel.text = _destinationDetails.locationFullName
-            cell.destinationTimeLabel.text = _destinationDetails.expDeparture
-        }
-        return cell
+        infoCell.configure(train: train)
+        return infoCell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

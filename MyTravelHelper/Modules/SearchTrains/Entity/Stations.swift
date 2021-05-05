@@ -41,13 +41,13 @@ struct Station: Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        let desc = try values.decode(String.self, forKey: .stationDesc)
-        let lat = try values.decode(Double.self, forKey: .stationLatitude)
-        let long = try values.decode(Double.self, forKey: .stationLongitude)
-        let code = try values.decode(String.self, forKey: .stationCode)
-        let stationId = try values.decode(Int.self, forKey: .stationId)
+        let desc = try values.decodeIfPresent(String.self, forKey: .stationDesc)
+        let lat = try values.decodeIfPresent(Double.self, forKey: .stationLatitude)
+        let long = try values.decodeIfPresent(Double.self, forKey: .stationLongitude)
+        let code = try values.decodeIfPresent(String.self, forKey: .stationCode)
+        let stationId = try values.decodeIfPresent(Int.self, forKey: .stationId)
 
-        self.init(desc: desc, latitude: lat, longitude: long, code: code, stationId: stationId)
+        self.init(desc: desc!, latitude: lat!, longitude: long!, code: code!, stationId: stationId!)
     }
 }
 

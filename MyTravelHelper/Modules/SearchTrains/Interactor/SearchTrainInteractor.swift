@@ -16,12 +16,21 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
     var presenter: InteractorToPresenterProtocol?
 
     func fetchallStations() {
+        
+        let url = RailwayRequest.allStations.getEndPoint()
+        let resource = Resource<Stations>(url)
+        
+        
         if Reach().isNetworkReachable() == true {
-            Alamofire.request("http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML")
-                .response { (response) in
-                let station = try? XMLDecoder().decode(Stations.self, from: response.data!)
-                self.presenter!.stationListFetched(list: station!.stationsList)
-            }
+            
+            APIService.shared.load(resource: resource, completion: { result in
+                switch result {
+                case .success(let stations):
+                    self.presenter?.stationListFetched(list: stations.stationsList)
+                case .failure(let err):
+                    print(err.localizedDescription)
+                }
+            })
         } else {
             self.presenter!.showNoInterNetAvailabilityMessage()
         }
@@ -30,16 +39,24 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
     func fetchTrainsFromSource(sourceCode: String, destinationCode: String) {
         _sourceStationCode = sourceCode
         _destinationStationCode = destinationCode
-        let urlString = "http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByCodeXML?StationCode=\(sourceCode)"
+        let url = RailwayRequest.stationByCode.getEndPoint()
+        let param:[String: String] = ["StationCode": sourceCode]
+        let resource = Resource<StationData>(url,param)
+        
         if Reach().isNetworkReachable() {
-            Alamofire.request(urlString).response { (response) in
-                let stationData = try? XMLDecoder().decode(StationData.self, from: response.data!)
-                if let _trainsList = stationData?.trainsList {
-                    self.proceesTrainListforDestinationCheck(trainsList: _trainsList)
-                } else {
-                    self.presenter!.showNoTrainAvailbilityFromSource()
+            APIService.shared.load(resource: resource, completion: { result in
+                
+                switch result{
+                case .success(let stationData):
+                    if stationData.trainsList.count > 0 {
+                    self.proceesTrainListforDestinationCheck(trainsList: stationData.trainsList)
+                    } else {
+                        self.presenter!.showNoTrainAvailbilityFromSource()
+                    }
+                case .failure(let err):
+                    print(err.localizedDescription)
                 }
-            }
+            })
         } else {
             self.presenter!.showNoInterNetAvailabilityMessage()
         }
@@ -50,28 +67,36 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
         let today = Date()
         let group = DispatchGroup()
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.dateFormat = "dd/MMM/yyyy"
         let dateString = formatter.string(from: today)
-        
-        for index  in 0...trainsList.count-1 {
+        for index in 0..<trainsList.count {
             group.enter()
-            let _urlString = "http://api.irishrail.ie/realtime/realtime.asmx/getTrainMovementsXML?TrainId=\(trainsList[index].trainCode)&TrainDate=\(dateString)"
+            let url = RailwayRequest.trainMovement.getEndPoint()
+            let param:[String: String] = ["TrainId": trainsList[index].trainCode,
+                                          "TrainDate": dateString]
+            let resource = Resource<TrainMovementsData>(url,param)
+            
             if Reach().isNetworkReachable() {
-                Alamofire.request(_urlString).response { (movementsData) in
-                    let trainMovements = try? XMLDecoder().decode(TrainMovementsData.self, from: movementsData.data!)
+                
+                APIService.shared.load(resource: resource, completion: { result in
+                    switch result {
+                    case .success(let trainMovementsData):
+                        if trainMovementsData.trainMovements.count > 0 {
+                            let _movements = trainMovementsData.trainMovements
+                                let sourceIndex = _movements.firstIndex(where: {$0.locationCode.caseInsensitiveCompare(self._sourceStationCode) == .orderedSame})
+                                let destinationIndex = _movements.firstIndex(where: {$0.locationCode.caseInsensitiveCompare(self._destinationStationCode) == .orderedSame})
+                                let desiredStationMoment = _movements.filter{$0.locationCode.caseInsensitiveCompare(self._destinationStationCode) == .orderedSame}
+                                let isDestinationAvailable = desiredStationMoment.count == 1
 
-                    if let _movements = trainMovements?.trainMovements {
-                        let sourceIndex = _movements.firstIndex(where: {$0.locationCode.caseInsensitiveCompare(self._sourceStationCode) == .orderedSame})
-                        let destinationIndex = _movements.firstIndex(where: {$0.locationCode.caseInsensitiveCompare(self._destinationStationCode) == .orderedSame})
-                        let desiredStationMoment = _movements.filter{$0.locationCode.caseInsensitiveCompare(self._destinationStationCode) == .orderedSame}
-                        let isDestinationAvailable = desiredStationMoment.count == 1
-
-                        if isDestinationAvailable  && sourceIndex! < destinationIndex! {
-                            _trainsList[index].destinationDetails = desiredStationMoment.first
+                                if isDestinationAvailable  && sourceIndex! < destinationIndex! {
+                                    _trainsList[index].destinationDetails = desiredStationMoment.first
+                                }
                         }
+                    case .failure(let err):
+                        print(err.localizedDescription)
                     }
                     group.leave()
-                }
+                })
             } else {
                 self.presenter!.showNoInterNetAvailabilityMessage()
             }

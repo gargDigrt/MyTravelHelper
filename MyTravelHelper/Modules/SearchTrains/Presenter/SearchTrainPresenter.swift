@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchTrainPresenter:ViewToPresenterProtocol {
+class SearchTrainPresenter: ViewToPresenterProtocol {
     var stationsList:[Station] = [Station]()
 
     func searchTapped(source: String, destination: String) {
@@ -22,6 +22,7 @@ class SearchTrainPresenter:ViewToPresenterProtocol {
     var view:PresenterToViewProtocol?
 
     func fetchallStations() {
+        interactor?.presenter = self
         interactor?.fetchallStations()
     }
 
@@ -41,7 +42,7 @@ extension SearchTrainPresenter: InteractorToPresenterProtocol {
     }
 
     func fetchedTrainsList(trainsList: [StationTrain]?) {
-        if let _trainsList = trainsList {
+        if let _trainsList = trainsList, _trainsList.count > 0 {
             view!.updateLatestTrainList(trainsList: _trainsList)
         }else {
             view!.showNoTrainsFoundAlert()

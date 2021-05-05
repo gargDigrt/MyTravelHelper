@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1654AF9B5118F79C1ACB2509 /* Pods_MyTravelHelperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4A9E0F8C97F8AA92AAA053 /* Pods_MyTravelHelperTests.framework */; };
+		226FA1522642964E00D03D8B /* RailwayRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1512642964E00D03D8B /* RailwayRequests.swift */; };
+		226FA156264296A500D03D8B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA155264296A500D03D8B /* Constants.swift */; };
+		226FA15A2642976100D03D8B /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1592642976100D03D8B /* Resource.swift */; };
 		22E0CE122641C7280072EB75 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0CE112641C7280072EB75 /* Protocols.swift */; };
+		22E0CE162641CF3D0072EB75 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0CE152641CF3D0072EB75 /* APIService.swift */; };
 		753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C8FA122361EC9005FF13B /* TrainMovements.swift */; };
 		753C8FA522361EC9005FF13B /* StationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C8FA222361EC9005FF13B /* StationInfo.swift */; };
 		753C8FA622361EC9005FF13B /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C8FA322361EC9005FF13B /* Stations.swift */; };
@@ -26,7 +30,6 @@
 		753F084C223618AB00175107 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 753F084A223618AB00175107 /* Main.storyboard */; };
 		753F084E223618AD00175107 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 753F084D223618AD00175107 /* Assets.xcassets */; };
 		753F0851223618AD00175107 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 753F084F223618AD00175107 /* LaunchScreen.storyboard */; };
-		753F087122361A6500175107 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F087022361A6500175107 /* AppConstants.swift */; };
 		8CBBCE0D40B8FE266A1617DE /* Pods_MyTravelHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF635B96516F13D67ADE01AF /* Pods_MyTravelHelper.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +45,11 @@
 
 /* Begin PBXFileReference section */
 		11F481535B44216B54872EF2 /* Pods-MyTravelHelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelperTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyTravelHelperTests/Pods-MyTravelHelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		226FA1512642964E00D03D8B /* RailwayRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayRequests.swift; sourceTree = "<group>"; };
+		226FA155264296A500D03D8B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		226FA1592642976100D03D8B /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		22E0CE112641C7280072EB75 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		22E0CE152641CF3D0072EB75 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		2F515F7A370B032163D445BC /* Pods-MyTravelHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelper.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyTravelHelper/Pods-MyTravelHelper.release.xcconfig"; sourceTree = "<group>"; };
 		4A3D05BF450D92647BC863F2 /* Pods-MyTravelHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyTravelHelper/Pods-MyTravelHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		753C8FA122361EC9005FF13B /* TrainMovements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainMovements.swift; sourceTree = "<group>"; };
@@ -66,7 +73,6 @@
 		753F0852223618AD00175107 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		753F0857223618AE00175107 /* MyTravelHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyTravelHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		753F085D223618AE00175107 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		753F087022361A6500175107 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		849A0A29A57A433EA5AB15FB /* Pods-MyTravelHelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelperTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyTravelHelperTests/Pods-MyTravelHelperTests.release.xcconfig"; sourceTree = "<group>"; };
 		AF635B96516F13D67ADE01AF /* Pods_MyTravelHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyTravelHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD4A9E0F8C97F8AA92AAA053 /* Pods_MyTravelHelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyTravelHelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +98,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		226FA16F2642E4D300D03D8B /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				753C8FBB223731E3005FF13B /* Reachability.swift */,
+				22E0CE152641CF3D0072EB75 /* APIService.swift */,
+				226FA1512642964E00D03D8B /* RailwayRequests.swift */,
+				226FA1592642976100D03D8B /* Resource.swift */,
+			);
+			path = WebServices;
+			sourceTree = "<group>";
+		};
+		226FA1742642E52100D03D8B /* CommonFiles */ = {
+			isa = PBXGroup;
+			children = (
+				226FA155264296A500D03D8B /* Constants.swift */,
+				22E0CE112641C7280072EB75 /* Protocols.swift */,
+			);
+			path = CommonFiles;
+			sourceTree = "<group>";
+		};
 		2BABC0CEC890350419CA1D40 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,7 +176,8 @@
 				753F0846223618AB00175107 /* AppDelegate.swift */,
 				753F084D223618AD00175107 /* Assets.xcassets */,
 				753F0852223618AD00175107 /* Info.plist */,
-				22E0CE112641C7280072EB75 /* Protocols.swift */,
+				226FA16F2642E4D300D03D8B /* WebServices */,
+				226FA1742642E52100D03D8B /* CommonFiles */,
 			);
 			path = MyTravelHelper;
 			sourceTree = "<group>";
@@ -239,8 +266,6 @@
 		753F086F22361A5100175107 /* App-utils */ = {
 			isa = PBXGroup;
 			children = (
-				753C8FBB223731E3005FF13B /* Reachability.swift */,
-				753F087022361A6500175107 /* AppConstants.swift */,
 				753C8FB422367D1C005FF13B /* AppUtils.swift */,
 				753C8FB622367DF4005FF13B /* ProgressIndicator.swift */,
 			);
@@ -420,17 +445,20 @@
 				753C8FBA2236BD80005FF13B /* TrainInfoCell.swift in Sources */,
 				753C8FA822361FC0005FF13B /* SearchTrainProtocols.swift in Sources */,
 				753C8FAA2236228C005FF13B /* SearchTrainPresenter.swift in Sources */,
+				226FA15A2642976100D03D8B /* Resource.swift in Sources */,
 				753C8FAE22362463005FF13B /* SearchTrainViewController.swift in Sources */,
 				753C8FB722367DF4005FF13B /* ProgressIndicator.swift in Sources */,
+				22E0CE162641CF3D0072EB75 /* APIService.swift in Sources */,
 				753C8FB522367D1C005FF13B /* AppUtils.swift in Sources */,
 				753C8FA522361EC9005FF13B /* StationInfo.swift in Sources */,
+				226FA1522642964E00D03D8B /* RailwayRequests.swift in Sources */,
 				753C8FBC223731E3005FF13B /* Reachability.swift in Sources */,
 				753C8FA622361EC9005FF13B /* Stations.swift in Sources */,
 				753C8FAC223623C2005FF13B /* SearchTrainInteractor.swift in Sources */,
-				753F087122361A6500175107 /* AppConstants.swift in Sources */,
 				753F0847223618AB00175107 /* AppDelegate.swift in Sources */,
 				753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */,
 				753C8FB022365E9A005FF13B /* SearchTrainRouter.swift in Sources */,
+				226FA156264296A500D03D8B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

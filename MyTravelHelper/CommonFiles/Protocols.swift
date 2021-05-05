@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum Storyboard: String {
-    case main
-    
-    func name() -> String {return rawValue.capitalized}
-}
-
 /// This protocol will allow ViewController to get instantiated easily
 protocol StoryBoardAble: class {
     //Properties
