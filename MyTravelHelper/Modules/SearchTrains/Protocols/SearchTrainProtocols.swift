@@ -41,3 +41,7 @@ protocol InteractorToPresenterProtocol: class {
     func showNoTrainAvailbilityFromSource()
     func showNoInterNetAvailabilityMessage()
 }
+
+protocol FavTrainDelegate: class {
+    func markTrainFavourite(train: StationTrain)
+}

@@ -26,6 +26,7 @@ struct StationTrain: Codable {
     var expArrival:String
     var expDeparture:String
     var destinationDetails:TrainMovement?
+    var isfavourite = false
 
     enum CodingKeys: String, CodingKey {
         case trainCode = "Traincode"
@@ -64,3 +65,10 @@ struct StationTrain: Codable {
     }
 }
 
+
+extension StationTrain: Equatable{
+    static func == (lhs: StationTrain, rhs: StationTrain) -> Bool {
+        return lhs.trainCode == rhs.trainCode
+    }
+    
+}

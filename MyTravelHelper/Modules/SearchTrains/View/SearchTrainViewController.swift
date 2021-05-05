@@ -17,10 +17,11 @@ class SearchTrainViewController: UIViewController, StoryBoardAble {
 
     var stationsList:[Station] = [Station]()
     var trains:[StationTrain] = [StationTrain]()
+    var favTrains:[StationTrain] = [StationTrain]()
     var presenter: ViewToPresenterProtocol?
     var dropDown = DropDown()
     var transitPoints:(source:String,destination:String) = ("","")
-    
+    var displayFavouriteTrains = false
     static var storyBoard: Storyboard {return .main}
 
     override func viewDidLoad() {
@@ -44,9 +45,23 @@ class SearchTrainViewController: UIViewController, StoryBoardAble {
         presenter?.searchTapped(source: transitPoints.source, destination: transitPoints.destination)
     }
     
+    @IBAction func clearSearch(_ : UIButton) {
+        sourceTxtField.text = ""
+        destinationTextField.text = ""
+        trains.removeAll()
+        displayFavouriteTrains = true
+        reloadTrainList()
+    }
+    
     private func switchTableViewVisibility(flag: Bool) {
         DispatchQueue.main.async {
             self.trainsListTable.isHidden = flag
+        }
+    }
+    
+    private func reloadTrainList() {
+        DispatchQueue.main.async {
+            self.trainsListTable.reloadData()
         }
     }
 }
@@ -60,8 +75,10 @@ extension SearchTrainViewController: PresenterToViewProtocol {
     }
 
     func showNoTrainAvailbilityFromSource() {
-        switchTableViewVisibility(flag: true)
-        hideProgressIndicator(view: self.view)
+        switchTableViewVisibility(flag: !(favTrains.count>0))
+        DispatchQueue.main.async{
+            hideProgressIndicator(view: self.view)
+        }
         showAlert(title: "No Trains", message: "Sorry No trains arriving source station in another 90 mins", actionTitle: "Okay")
     }
 
@@ -69,22 +86,24 @@ extension SearchTrainViewController: PresenterToViewProtocol {
         hideProgressIndicator(view: self.view)
         trains = trainsList
         switchTableViewVisibility(flag: false)
+        displayFavouriteTrains = false
         if trainsList.count > 0 {
-        trainsListTable.reloadData()
+            reloadTrainList()
         }
     }
 
     func showNoTrainsFoundAlert() {
-        switchTableViewVisibility(flag: true)
+        switchTableViewVisibility(flag: !(favTrains.count>0))
         hideProgressIndicator(view: self.view)
-        trainsListTable.isHidden = true
         showAlert(title: "No Trains", message: "Sorry No trains Found from source to destination in another 90 mins", actionTitle: "Okay")
     }
 
     func showAlert(title:String,message:String,actionTitle:String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     func showInvalidSourceOrDestinationAlert() {
@@ -98,6 +117,19 @@ extension SearchTrainViewController: PresenterToViewProtocol {
           self.stationsList = _stations
         }
         SwiftSpinner.hide()
+    }
+    
+    func manageFavouriteTrain(train: StationTrain) {
+        if train.isfavourite {
+            favTrains.append(train)
+        } else
+        if let indx = favTrains.firstIndex(where: {$0==train}) {
+            favTrains.remove(at: indx)
+            if displayFavouriteTrains {
+                reloadTrainList()
+            }
+        }
+
     }
 }
 
@@ -144,17 +176,26 @@ extension SearchTrainViewController:UITextFieldDelegate {
 extension SearchTrainViewController: UITableViewDataSource,UITableViewDelegate {
      
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return trains.count
+        
+        return displayFavouriteTrains ? favTrains.count : trains.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let infoCell = tableView.dequeueReusableCell(withIdentifier: "train", for: indexPath) as! TrainInfoCell
-        let train = trains[indexPath.row]
-        infoCell.configure(train: train)
+        let displayingTrains = displayFavouriteTrains ? favTrains : trains
+        let train = displayingTrains[indexPath.row]
+        infoCell.train = train
+        infoCell.delegate = self
         return infoCell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
+    }
+}
+
+extension SearchTrainViewController: FavTrainDelegate {
+    func markTrainFavourite(train: StationTrain) {
+        manageFavouriteTrain(train: train)
     }
 }

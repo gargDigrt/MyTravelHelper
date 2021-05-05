@@ -55,6 +55,7 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
                     }
                 case .failure(let err):
                     print(err.localizedDescription)
+                    self.presenter?.showNoTrainAvailbilityFromSource()
                 }
             })
         } else {
