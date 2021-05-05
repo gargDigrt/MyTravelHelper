@@ -20,9 +20,7 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
         let url = RailwayRequest.allStations.getEndPoint()
         let resource = Resource<Stations>(url)
         
-        
-        if Reach().isNetworkReachable() == true {
-            
+        if Reach().isNetworkReachable(){
             APIService.shared.load(resource: resource, completion: { result in
                 switch result {
                 case .success(let stations):
@@ -65,11 +63,9 @@ class SearchTrainInteractor: PresenterToInteractorProtocol {
     
     private func proceesTrainListforDestinationCheck(trainsList: [StationTrain]) {
         var _trainsList = trainsList
-        let today = Date()
+        let dateString = Date().today("dd/MMM/yyyy")
+        
         let group = DispatchGroup()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MMM/yyyy"
-        let dateString = formatter.string(from: today)
         for index in 0..<trainsList.count {
             group.enter()
             let url = RailwayRequest.trainMovement.getEndPoint()

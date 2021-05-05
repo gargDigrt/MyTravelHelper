@@ -11,6 +11,11 @@
 		226FA1522642964E00D03D8B /* RailwayRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1512642964E00D03D8B /* RailwayRequests.swift */; };
 		226FA156264296A500D03D8B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA155264296A500D03D8B /* Constants.swift */; };
 		226FA15A2642976100D03D8B /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1592642976100D03D8B /* Resource.swift */; };
+		226FA1782643142B00D03D8B /* SearchTrainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1772643142B00D03D8B /* SearchTrainInteractorTests.swift */; };
+		226FA17E2643183000D03D8B /* APIServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA17D2643183000D03D8B /* APIServiceProtocol.swift */; };
+		226FA18526431ABC00D03D8B /* MockAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA18326431ABC00D03D8B /* MockAPIService.swift */; };
+		226FA1922643204300D03D8B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1912643204300D03D8B /* Extensions.swift */; };
+		226FA1932643204300D03D8B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226FA1912643204300D03D8B /* Extensions.swift */; };
 		22E0CE122641C7280072EB75 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0CE112641C7280072EB75 /* Protocols.swift */; };
 		22E0CE162641CF3D0072EB75 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0CE152641CF3D0072EB75 /* APIService.swift */; };
 		753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C8FA122361EC9005FF13B /* TrainMovements.swift */; };
@@ -48,6 +53,10 @@
 		226FA1512642964E00D03D8B /* RailwayRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailwayRequests.swift; sourceTree = "<group>"; };
 		226FA155264296A500D03D8B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		226FA1592642976100D03D8B /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		226FA1772643142B00D03D8B /* SearchTrainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTrainInteractorTests.swift; sourceTree = "<group>"; };
+		226FA17D2643183000D03D8B /* APIServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProtocol.swift; sourceTree = "<group>"; };
+		226FA18326431ABC00D03D8B /* MockAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIService.swift; sourceTree = "<group>"; };
+		226FA1912643204300D03D8B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		22E0CE112641C7280072EB75 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		22E0CE152641CF3D0072EB75 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		2F515F7A370B032163D445BC /* Pods-MyTravelHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelper.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyTravelHelper/Pods-MyTravelHelper.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +114,7 @@
 				22E0CE152641CF3D0072EB75 /* APIService.swift */,
 				226FA1512642964E00D03D8B /* RailwayRequests.swift */,
 				226FA1592642976100D03D8B /* Resource.swift */,
+				226FA17D2643183000D03D8B /* APIServiceProtocol.swift */,
 			);
 			path = WebServices;
 			sourceTree = "<group>";
@@ -114,8 +124,17 @@
 			children = (
 				226FA155264296A500D03D8B /* Constants.swift */,
 				22E0CE112641C7280072EB75 /* Protocols.swift */,
+				226FA1912643204300D03D8B /* Extensions.swift */,
 			);
 			path = CommonFiles;
+			sourceTree = "<group>";
+		};
+		226FA18826431AC100D03D8B /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				226FA18326431ABC00D03D8B /* MockAPIService.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		2BABC0CEC890350419CA1D40 /* Pods */ = {
@@ -173,11 +192,11 @@
 				753C8FB822367E64005FF13B /* App-Ui */,
 				753F086F22361A5100175107 /* App-utils */,
 				753F08672236190700175107 /* Modules */,
+				226FA16F2642E4D300D03D8B /* WebServices */,
+				226FA1742642E52100D03D8B /* CommonFiles */,
 				753F0846223618AB00175107 /* AppDelegate.swift */,
 				753F084D223618AD00175107 /* Assets.xcassets */,
 				753F0852223618AD00175107 /* Info.plist */,
-				226FA16F2642E4D300D03D8B /* WebServices */,
-				226FA1742642E52100D03D8B /* CommonFiles */,
 			);
 			path = MyTravelHelper;
 			sourceTree = "<group>";
@@ -186,7 +205,9 @@
 			isa = PBXGroup;
 			children = (
 				753C8FBD2237367E005FF13B /* SearchTrainPresenterTests.swift */,
+				226FA1772643142B00D03D8B /* SearchTrainInteractorTests.swift */,
 				753F085D223618AE00175107 /* Info.plist */,
+				226FA18826431AC100D03D8B /* Mocks */,
 			);
 			path = MyTravelHelperTests;
 			sourceTree = "<group>";
@@ -456,8 +477,10 @@
 				753C8FA622361EC9005FF13B /* Stations.swift in Sources */,
 				753C8FAC223623C2005FF13B /* SearchTrainInteractor.swift in Sources */,
 				753F0847223618AB00175107 /* AppDelegate.swift in Sources */,
+				226FA1922643204300D03D8B /* Extensions.swift in Sources */,
 				753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */,
 				753C8FB022365E9A005FF13B /* SearchTrainRouter.swift in Sources */,
+				226FA17E2643183000D03D8B /* APIServiceProtocol.swift in Sources */,
 				226FA156264296A500D03D8B /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,7 +489,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226FA18526431ABC00D03D8B /* MockAPIService.swift in Sources */,
+				226FA1782643142B00D03D8B /* SearchTrainInteractorTests.swift in Sources */,
 				753C8FBE2237367E005FF13B /* SearchTrainPresenterTests.swift in Sources */,
+				226FA1932643204300D03D8B /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

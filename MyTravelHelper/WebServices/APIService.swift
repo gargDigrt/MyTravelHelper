@@ -11,7 +11,7 @@ import XMLParsing
 
 
 
-class APIService: NSObject {
+class APIService: NSObject, APIServiceProtocol {
     
     
     static let shared = APIService()

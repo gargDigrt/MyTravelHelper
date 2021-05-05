@@ -33,7 +33,7 @@ class SearchTrainPresenterTests: XCTestCase {
 }
 
 
-class SearchTrainMockView:PresenterToViewProtocol {
+class SearchTrainMockView: PresenterToViewProtocol {
     var isSaveFetchedStatinsCalled = false
 
     func saveFetchedStations(stations: [Station]?) {
